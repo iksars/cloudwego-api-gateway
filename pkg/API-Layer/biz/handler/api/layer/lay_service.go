@@ -27,6 +27,8 @@ func GateWayMethod(ctx context.Context, c *app.RequestContext) {
 	fmt.Println(req.ServiceMethod)
 	fmt.Println(c.Body())
 
+	//这里调用routing层的RoutingDistribute方法
+
 	resp := new(layer.LayResp)
 
 	resp.RespBody = "hello agw"
