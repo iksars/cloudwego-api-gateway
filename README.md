@@ -2,4 +2,4 @@
 基于cloudwego进行api网关开发
 
 
-![img]("./pic/sequenceGraph.png")
+![img](pic/sequenceGraph.png)
