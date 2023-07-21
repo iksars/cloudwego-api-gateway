@@ -3,11 +3,9 @@
 package layer
 
 import (
+	layer "cloudwego-api-gateway/pkg/API-Layer/biz/model/api/layer"
 	"context"
 	"fmt"
-
-	layer "cloudwego-api-gateway/pkg/API-Layer/biz/model/api/layer"
-
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
