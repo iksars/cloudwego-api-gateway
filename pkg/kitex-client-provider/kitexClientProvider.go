@@ -17,16 +17,17 @@ type DefaultKitexClientProvider struct {
 	cache    map[string]genericclient.Client // 缓存
 }
 
-func (ptr *DefaultKitexClientProvider) init() {
+func NewDefaultKitexClientProvider() (res *DefaultKitexClientProvider) {
 	var err error
-	ptr.cache = make(map[string]genericclient.Client)
-	ptr.register, err = etcd.NewEtcdResolver([]string{"127.0.0.1:2379"})
+	res = &DefaultKitexClientProvider{}
+	res.cache = make(map[string]genericclient.Client)
+	res.register, err = etcd.NewEtcdResolver([]string{"127.0.0.1:2379"})
 	if err != nil {
 		panic(err)
 	}
 	// 启动一个goroutine,定时刷新client缓存
-	go ptr.updateCache()
-
+	go res.updateCache()
+	return
 }
 
 func (ptr *DefaultKitexClientProvider) NewGenericClient(serviceName string, idlContent string) (client genericclient.Client) {

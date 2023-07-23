@@ -4,14 +4,17 @@ package layer
 
 import (
 	layer "cloudwego-api-gateway/pkg/API-Layer/biz/model/api/layer"
-	"cloudwego-api-gateway/pkg/routing"
+	routing "cloudwego-api-gateway/pkg/routing"
 	"context"
 	"fmt"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/adaptor"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/cloudwego/kitex/pkg/generic"
 )
+
+var routingHandler routing.RouteHandler = routing.NewDefaultRouteHandler()
 
 // GateWayMethod .
 // @router /agw [POST]
@@ -29,7 +32,7 @@ func GateWayMethod(ctx context.Context, c *app.RequestContext) {
 	fmt.Println(c.Body())
 
 	//这里调用routing层的RoutingDistribute方法
-	cli := routing.RoutingDistribute(req.ServiceName)
+	cli := routingHandler.RoutingDistribute(req.ServiceName)
 
 	httpReq, err := adaptor.GetCompatRequest(c.GetRequest())
 	if err != nil {
