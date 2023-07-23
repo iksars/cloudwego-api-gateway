@@ -29,7 +29,7 @@ func GateWayMethod(ctx context.Context, c *app.RequestContext) {
 	fmt.Println(c.Body())
 
 	//这里调用routing层的RoutingDistribute方法
-	cli := routing.RoutingDistribute(req.ServiceName, req.ServiceMethod)
+	cli := routing.RoutingDistribute(req.ServiceName)
 
 	httpReq, err := adaptor.GetCompatRequest(c.GetRequest())
 	if err != nil {
@@ -40,6 +40,6 @@ func GateWayMethod(ctx context.Context, c *app.RequestContext) {
 		panic("get custom req failed")
 	}
 
-	resp, err := cli.GenericCall(ctx, "GateWayMethod", customReq)
+	resp, err := cli.GenericCall(ctx, req.ServiceMethod, customReq)
 	c.JSON(consts.StatusOK, resp)
 }
