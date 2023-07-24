@@ -6,26 +6,7 @@ import Present from '../components/present.vue'
 import { request } from '../utils/request.js'
 
 const tableData = ref([
-  {
-    date: '2016-05-02',
-    name: '王小虎',
-    IDLfile: '上海市普陀区金沙江路 1518 弄'
-  },
-  {
-    date: '2016-05-04',
-    name: '王小虎',
-    IDLfile: '上海市普陀区金沙江路 1517 弄'
-  },
-  {
-    date: '2016-05-01',
-    name: '王小虎',
-    IDLfile: '上海市普陀区金沙江路 1519 弄'
-  },
-  {
-    date: '2016-05-03',
-    name: '王小虎',
-    IDLfile: '上海市普陀区金沙江路 1516 弄'
-  }
+  
 ])
 
 const present = ref(true)
@@ -36,17 +17,41 @@ const add = ref(false)
 
 
 onMounted(() => {
+  pullAllData()
+}
+)
+
+const pullAllData = () => {
   request({
     url: '/api/getAll',
     method: 'get',
   }).then(res => {
-    console.log(res)
-    tableData.value = res.data.data
+    console.log(res.data)
+    tableData.value = res.data.Ls
   }).catch(err => {
     console.log(err)
-    window.alert('查询失败')
+    window.alert('获取数据失败')
   })
-})
+}
+
+const jumpToSearch = () => {
+  present.value = false
+  search.value = true
+  add.value = false
+}
+
+const jumpToAdd = () => {
+  present.value = false
+  search.value = false
+  add.value = true
+}
+
+const jumpToPresent = () => {
+  present.value = true
+  search.value = false
+  add.value = false
+  pullAllData()
+}
 
 
 
@@ -59,11 +64,11 @@ onMounted(() => {
       <el-header class="header">IDL管理平台</el-header>
       <el-container>
         <el-aside width="200px" class="aside">
-          <el-button type="primary" class="asideButton" plain @Click="present=true;search=false;add=false">主页</el-button>
+          <el-button type="primary" class="asideButton" plain @Click="jumpToPresent">主页</el-button>
           <br>
-          <el-button type="primary" class="asideButton" plain @Click="search=true;add=false;present=false">查询</el-button>
+          <el-button type="primary" class="asideButton" plain @Click="jumpToSearch">查询</el-button>
           <br>
-          <el-button type="primary" class="asideButton" plain @Click="add=true;search=false;present=false">增加</el-button>
+          <el-button type="primary" class="asideButton" plain @Click="jumpToAdd">增加</el-button>
           </el-aside>
         <el-main class="main">
           <Present :tableData="tableData" :presentState="present"></present>

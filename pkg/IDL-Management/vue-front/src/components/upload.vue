@@ -3,6 +3,7 @@
       ref="upload"
       class="upload-demo"
       :action="action"
+      :method="'post'"
       :limit="1"
       :on-exceed="handleExceed"
       :auto-upload="false"
@@ -43,7 +44,7 @@
 
   const handleError: UploadProps['onError'] = (err, file) => {
     console.error(err, file)
-    window.alert('upload failed')
+    window.alert(err.message)
   }
   
   const submitUpload = () => {

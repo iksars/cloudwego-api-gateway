@@ -4,10 +4,10 @@ namespace go IDLManage
 struct IDLEntity {
     1: string Date;
     2: string Name;
-    3: string Decription;
+    3: string Description;
 }
 
-struct QueryAllReq {
+struct EmptyReq {
     
 }
 
@@ -21,8 +21,8 @@ struct QueryResp {
 
 struct AddReq {
     1: string Name;
-    2: string Decription;
-    3: binary Date;
+    2: string Description;
+    3: binary Data;
 }
 
 struct CommonResp {
@@ -31,13 +31,12 @@ struct CommonResp {
 
 
 struct DownloadResp {
-    1: string Message;
-    2: binary File;
+    1: binary Data;
 }
 
 
 service ManageService {
-    QueryResp SelectAll(1: QueryAllReq req) (api.get="/api/getAll");
+    QueryResp SelectAll(1: EmptyReq req) (api.get="/api/getAll");
 
     QueryResp SelectByName(1: NameBasedReq req) (api.get="/api/search");
 
@@ -45,5 +44,5 @@ service ManageService {
 
     CommonResp DeleteByName(1: NameBasedReq req) (api.delete="/api/delete");
 
-    CommonResp DownloadByName(1: NameBasedReq req) (api.get="/api/download");
+    DownloadResp DownloadByName(1: NameBasedReq req) (api.get="/api/download");
 }

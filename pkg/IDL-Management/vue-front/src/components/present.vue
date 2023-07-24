@@ -5,20 +5,21 @@ const props = defineProps(['tableData', 'presentState'])
 
 const deleteRow = (index) => {
   request({
-    url: '/api/delete?name=' + props.tableData[index].name,
+    url: '/api/delete?name=' + props.tableData[index].Name,
     method: 'delete',
   }).then((res) => {
     props.tableData.splice(index, 1)
     console.log(res)
+    window.alert('删除成功')
   }).catch((err) => {
     console.log(err)
-    window.alert('删除失败')
+    window.alert(err.message)
   })
 }
 
 const downloadRow = (index) => {
   request({
-    url: '/api/download?name=' + props.tableData[index].name,
+    url: '/api/download?name=' + props.tableData[index].Name,
     method: 'get',
     responseType: 'blob',
   }).then((res)=>{
@@ -26,7 +27,8 @@ const downloadRow = (index) => {
         const link=document.createElement('a');
         try{
 	          let blob =  res.data
-	          let _fileName = res.headers['content-disposition'].split(';')[1].split('=')[1];//文件名，中文无法解析的时候会显示 _(下划线),生产环境获取不到
+            console.log(res.data)
+	          let _fileName = res.headers['content-disposition'].split(';')[1].split('=')[1]
 	          link.style.display='none';
 	          // 兼容不同浏览器的URL对象
 	          const url = window.URL || window.webkitURL || window.moxURL;
@@ -48,18 +50,18 @@ const downloadRow = (index) => {
             :data="tableData"
             style="width: 100%">
             <el-table-column
-              prop="date"
+              prop="Date"
               label="服务上线日期"
               width="180">
             </el-table-column>
             <el-table-column
-              prop="name"
+              prop="Name"
               label="服务名称"
               width="180">
             </el-table-column>
             <el-table-column
-              prop="IDLfile"
-              label="API">
+              prop="Description"
+              label="相关描述">
             </el-table-column>
             <el-table-column fixed="right" label="Operations" width="200">
             <template #default="scope">

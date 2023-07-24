@@ -9,9 +9,9 @@ import (
 )
 
 type IDLEntity struct {
-	Date       string `thrift:"Date,1" form:"Date" json:"Date" query:"Date"`
-	Name       string `thrift:"Name,2" form:"Name" json:"Name" query:"Name"`
-	Decription string `thrift:"Decription,3" form:"Decription" json:"Decription" query:"Decription"`
+	Date        string `thrift:"Date,1" form:"Date" json:"Date" query:"Date"`
+	Name        string `thrift:"Name,2" form:"Name" json:"Name" query:"Name"`
+	Description string `thrift:"Description,3" form:"Description" json:"Description" query:"Description"`
 }
 
 func NewIDLEntity() *IDLEntity {
@@ -26,14 +26,14 @@ func (p *IDLEntity) GetName() (v string) {
 	return p.Name
 }
 
-func (p *IDLEntity) GetDecription() (v string) {
-	return p.Decription
+func (p *IDLEntity) GetDescription() (v string) {
+	return p.Description
 }
 
 var fieldIDToName_IDLEntity = map[int16]string{
 	1: "Date",
 	2: "Name",
-	3: "Decription",
+	3: "Description",
 }
 
 func (p *IDLEntity) Read(iprot thrift.TProtocol) (err error) {
@@ -137,7 +137,7 @@ func (p *IDLEntity) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Decription = v
+		p.Description = v
 	}
 	return nil
 }
@@ -214,10 +214,10 @@ WriteFieldEndError:
 }
 
 func (p *IDLEntity) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Decription", thrift.STRING, 3); err != nil {
+	if err = oprot.WriteFieldBegin("Description", thrift.STRING, 3); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Decription); err != nil {
+	if err := oprot.WriteString(p.Description); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -237,16 +237,16 @@ func (p *IDLEntity) String() string {
 	return fmt.Sprintf("IDLEntity(%+v)", *p)
 }
 
-type QueryAllReq struct {
+type EmptyReq struct {
 }
 
-func NewQueryAllReq() *QueryAllReq {
-	return &QueryAllReq{}
+func NewEmptyReq() *EmptyReq {
+	return &EmptyReq{}
 }
 
-var fieldIDToName_QueryAllReq = map[int16]string{}
+var fieldIDToName_EmptyReq = map[int16]string{}
 
-func (p *QueryAllReq) Read(iprot thrift.TProtocol) (err error) {
+func (p *EmptyReq) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -289,8 +289,8 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *QueryAllReq) Write(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteStructBegin("QueryAllReq"); err != nil {
+func (p *EmptyReq) Write(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteStructBegin("EmptyReq"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -311,11 +311,11 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *QueryAllReq) String() string {
+func (p *EmptyReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("QueryAllReq(%+v)", *p)
+	return fmt.Sprintf("EmptyReq(%+v)", *p)
 }
 
 type NameBasedReq struct {
@@ -612,9 +612,9 @@ func (p *QueryResp) String() string {
 }
 
 type AddReq struct {
-	Name       string `thrift:"Name,1" form:"Name" json:"Name" query:"Name"`
-	Decription string `thrift:"Decription,2" form:"Decription" json:"Decription" query:"Decription"`
-	Date       []byte `thrift:"Date,3" form:"Date" json:"Date" query:"Date"`
+	Name        string `thrift:"Name,1" form:"Name" json:"Name" query:"Name"`
+	Description string `thrift:"Description,2" form:"Description" json:"Description" query:"Description"`
+	Data        []byte `thrift:"Data,3" form:"Data" json:"Data" query:"Data"`
 }
 
 func NewAddReq() *AddReq {
@@ -625,18 +625,18 @@ func (p *AddReq) GetName() (v string) {
 	return p.Name
 }
 
-func (p *AddReq) GetDecription() (v string) {
-	return p.Decription
+func (p *AddReq) GetDescription() (v string) {
+	return p.Description
 }
 
-func (p *AddReq) GetDate() (v []byte) {
-	return p.Date
+func (p *AddReq) GetData() (v []byte) {
+	return p.Data
 }
 
 var fieldIDToName_AddReq = map[int16]string{
 	1: "Name",
-	2: "Decription",
-	3: "Date",
+	2: "Description",
+	3: "Data",
 }
 
 func (p *AddReq) Read(iprot thrift.TProtocol) (err error) {
@@ -731,7 +731,7 @@ func (p *AddReq) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Decription = v
+		p.Description = v
 	}
 	return nil
 }
@@ -740,7 +740,7 @@ func (p *AddReq) ReadField3(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadBinary(); err != nil {
 		return err
 	} else {
-		p.Date = []byte(v)
+		p.Data = []byte(v)
 	}
 	return nil
 }
@@ -800,10 +800,10 @@ WriteFieldEndError:
 }
 
 func (p *AddReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Decription", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("Description", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Decription); err != nil {
+	if err := oprot.WriteString(p.Description); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -817,10 +817,10 @@ WriteFieldEndError:
 }
 
 func (p *AddReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Date", thrift.STRING, 3); err != nil {
+	if err = oprot.WriteFieldBegin("Data", thrift.STRING, 3); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteBinary([]byte(p.Date)); err != nil {
+	if err := oprot.WriteBinary([]byte(p.Data)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -978,25 +978,19 @@ func (p *CommonResp) String() string {
 }
 
 type DownloadResp struct {
-	Message string `thrift:"Message,1" form:"Message" json:"Message" query:"Message"`
-	File    []byte `thrift:"File,2" form:"File" json:"File" query:"File"`
+	Data []byte `thrift:"Data,1" form:"Data" json:"Data" query:"Data"`
 }
 
 func NewDownloadResp() *DownloadResp {
 	return &DownloadResp{}
 }
 
-func (p *DownloadResp) GetMessage() (v string) {
-	return p.Message
-}
-
-func (p *DownloadResp) GetFile() (v []byte) {
-	return p.File
+func (p *DownloadResp) GetData() (v []byte) {
+	return p.Data
 }
 
 var fieldIDToName_DownloadResp = map[int16]string{
-	1: "Message",
-	2: "File",
+	1: "Data",
 }
 
 func (p *DownloadResp) Read(iprot thrift.TProtocol) (err error) {
@@ -1021,16 +1015,6 @@ func (p *DownloadResp) Read(iprot thrift.TProtocol) (err error) {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else {
@@ -1069,19 +1053,10 @@ ReadStructEndError:
 }
 
 func (p *DownloadResp) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Message = v
-	}
-	return nil
-}
-
-func (p *DownloadResp) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadBinary(); err != nil {
 		return err
 	} else {
-		p.File = []byte(v)
+		p.Data = []byte(v)
 	}
 	return nil
 }
@@ -1094,10 +1069,6 @@ func (p *DownloadResp) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -1120,10 +1091,10 @@ WriteStructEndError:
 }
 
 func (p *DownloadResp) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Message", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("Data", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Message); err != nil {
+	if err := oprot.WriteBinary([]byte(p.Data)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1136,23 +1107,6 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *DownloadResp) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("File", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteBinary([]byte(p.File)); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
 func (p *DownloadResp) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1161,7 +1115,7 @@ func (p *DownloadResp) String() string {
 }
 
 type ManageService interface {
-	SelectAll(ctx context.Context, req *QueryAllReq) (r *QueryResp, err error)
+	SelectAll(ctx context.Context, req *EmptyReq) (r *QueryResp, err error)
 
 	SelectByName(ctx context.Context, req *NameBasedReq) (r *QueryResp, err error)
 
@@ -1169,7 +1123,7 @@ type ManageService interface {
 
 	DeleteByName(ctx context.Context, req *NameBasedReq) (r *CommonResp, err error)
 
-	DownloadByName(ctx context.Context, req *NameBasedReq) (r *CommonResp, err error)
+	DownloadByName(ctx context.Context, req *NameBasedReq) (r *DownloadResp, err error)
 }
 
 type ManageServiceClient struct {
@@ -1198,7 +1152,7 @@ func (p *ManageServiceClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *ManageServiceClient) SelectAll(ctx context.Context, req *QueryAllReq) (r *QueryResp, err error) {
+func (p *ManageServiceClient) SelectAll(ctx context.Context, req *EmptyReq) (r *QueryResp, err error) {
 	var _args ManageServiceSelectAllArgs
 	_args.Req = req
 	var _result ManageServiceSelectAllResult
@@ -1234,7 +1188,7 @@ func (p *ManageServiceClient) DeleteByName(ctx context.Context, req *NameBasedRe
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *ManageServiceClient) DownloadByName(ctx context.Context, req *NameBasedReq) (r *CommonResp, err error) {
+func (p *ManageServiceClient) DownloadByName(ctx context.Context, req *NameBasedReq) (r *DownloadResp, err error) {
 	var _args ManageServiceDownloadByNameArgs
 	_args.Req = req
 	var _result ManageServiceDownloadByNameResult
@@ -1500,7 +1454,7 @@ func (p *manageServiceProcessorDownloadByName) Process(ctx context.Context, seqI
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := ManageServiceDownloadByNameResult{}
-	var retval *CommonResp
+	var retval *DownloadResp
 	if retval, err2 = p.handler.DownloadByName(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing DownloadByName: "+err2.Error())
 		oprot.WriteMessageBegin("DownloadByName", thrift.EXCEPTION, seqId)
@@ -1530,16 +1484,16 @@ func (p *manageServiceProcessorDownloadByName) Process(ctx context.Context, seqI
 }
 
 type ManageServiceSelectAllArgs struct {
-	Req *QueryAllReq `thrift:"req,1"`
+	Req *EmptyReq `thrift:"req,1"`
 }
 
 func NewManageServiceSelectAllArgs() *ManageServiceSelectAllArgs {
 	return &ManageServiceSelectAllArgs{}
 }
 
-var ManageServiceSelectAllArgs_Req_DEFAULT *QueryAllReq
+var ManageServiceSelectAllArgs_Req_DEFAULT *EmptyReq
 
-func (p *ManageServiceSelectAllArgs) GetReq() (v *QueryAllReq) {
+func (p *ManageServiceSelectAllArgs) GetReq() (v *EmptyReq) {
 	if !p.IsSetReq() {
 		return ManageServiceSelectAllArgs_Req_DEFAULT
 	}
@@ -1614,7 +1568,7 @@ ReadStructEndError:
 }
 
 func (p *ManageServiceSelectAllArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = NewQueryAllReq()
+	p.Req = NewEmptyReq()
 	if err := p.Req.Read(iprot); err != nil {
 		return err
 	}
@@ -2843,16 +2797,16 @@ func (p *ManageServiceDownloadByNameArgs) String() string {
 }
 
 type ManageServiceDownloadByNameResult struct {
-	Success *CommonResp `thrift:"success,0,optional"`
+	Success *DownloadResp `thrift:"success,0,optional"`
 }
 
 func NewManageServiceDownloadByNameResult() *ManageServiceDownloadByNameResult {
 	return &ManageServiceDownloadByNameResult{}
 }
 
-var ManageServiceDownloadByNameResult_Success_DEFAULT *CommonResp
+var ManageServiceDownloadByNameResult_Success_DEFAULT *DownloadResp
 
-func (p *ManageServiceDownloadByNameResult) GetSuccess() (v *CommonResp) {
+func (p *ManageServiceDownloadByNameResult) GetSuccess() (v *DownloadResp) {
 	if !p.IsSetSuccess() {
 		return ManageServiceDownloadByNameResult_Success_DEFAULT
 	}
@@ -2927,7 +2881,7 @@ ReadStructEndError:
 }
 
 func (p *ManageServiceDownloadByNameResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = NewCommonResp()
+	p.Success = NewDownloadResp()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
 	}

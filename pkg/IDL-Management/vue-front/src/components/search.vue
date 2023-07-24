@@ -14,33 +14,16 @@ const present = ref(false)
 const query = () => {
   console.log(inputServiceName.value)
     request({
-        url: '/api/search?'+inputServiceName.value,
+        url: '/api/search?name='+inputServiceName.value,
         method: 'get',
     }).then(res => {
         console.log(res)
-        result = res.data.data
+        result.value = res.data.Ls
+        present.value = true
     }).catch(err => {
         console.log(err)
         window.alert('查询失败')
     })
-    result.value = [
-        {
-            date: '2021-10-01',
-            name: 'service1',
-            IDLfile: 'file1',
-        },
-        {
-            date: '2021-10-02',
-            name: 'service2',
-            IDLfile: 'file2',
-        },
-        {
-            date: '2021-10-03',
-            name: 'service3',
-            IDLfile: 'file3',
-        },
-    ]
-    present.value = true
 }
 </script>
 
