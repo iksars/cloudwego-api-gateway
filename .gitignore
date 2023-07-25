@@ -35,8 +35,8 @@ _testmain.go
 *.local.yml
 dumped_hertz_remote_config.json
 cloudwego-api-gateway
-foo.db
-./pkg/IDL-Management/hertz-back/foo.db
+*.db
+pkg/IDL-Management/hertz-back/foo.db
 pkg/IDL-Management/hertz-back/hertz-back
 ```
 		  
