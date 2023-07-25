@@ -25,6 +25,11 @@ type IdlManagement struct {
 	err error
 }
 
+var IdlManagements = IdlManagement{
+	db:  nil,
+	err: nil,
+}
+
 func (i *IdlManagement) IDLManagementInit(name string) {
 	i.db, i.err = gorm.Open(sqlite.Open("foo.db"), &gorm.Config{})
 	if i.err != nil {
