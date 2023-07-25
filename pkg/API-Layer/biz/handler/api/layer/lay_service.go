@@ -9,9 +9,7 @@ import (
 	"fmt"
 
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/common/adaptor"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"github.com/cloudwego/kitex/pkg/generic"
 )
 
 var routingHandler routing.RouteHandler = routing.NewDefaultRouteHandler()
@@ -29,20 +27,21 @@ func GateWayMethod(ctx context.Context, c *app.RequestContext) {
 
 	fmt.Println(req.ServiceName)
 	fmt.Println(req.ServiceMethod)
-	fmt.Println(c.Body())
 
 	//这里调用routing层的RoutingDistribute方法
 	cli := routingHandler.RoutingDistribute(req.ServiceName)
 
-	httpReq, err := adaptor.GetCompatRequest(c.GetRequest())
+	reqBytes, err := c.Body()
 	if err != nil {
-		panic("get http req failed")
-	}
-	customReq, err := generic.FromHTTPRequest(httpReq)
-	if err != nil {
-		panic("get custom req failed")
+		c.String(consts.StatusBadRequest, err.Error())
+		return
 	}
 
-	resp, err := cli.GenericCall(ctx, req.ServiceMethod, customReq)
+	resp, err := cli.GenericCall(ctx, req.ServiceMethod, string(reqBytes))
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
 	c.JSON(consts.StatusOK, resp)
 }
