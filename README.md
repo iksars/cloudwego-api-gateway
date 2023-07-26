@@ -14,7 +14,7 @@
 
 #### 1. 安装依赖
 ##### 1.1 安装hertz相关依赖
-```
+
 详见 https://www.cloudwego.io/zh/docs/hertz/getting-started/
 
 ##### 1.2 安装vue相关依赖
@@ -27,9 +27,9 @@ pkg/IDL-Management/vue-front里是前端代码，需要安装vue相关依赖
 
 略
     
-```
+
 #### 2. 启动服务
-```
+
 ##### 2.1 shell脚本启动
 
 ```shell
