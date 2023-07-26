@@ -2,6 +2,7 @@ package kitexclientprovider
 
 import (
 	idlprovider "cloudwego-api-gateway/pkg/IDL-provider"
+	"fmt"
 
 	cli "github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/genericclient"
@@ -86,7 +87,8 @@ func (ptr *defaultKitexClientProvider) dynamicClientCacheRefresh() {
 	for {
 		time.Sleep(ptr.updateInterval)
 		ptr.cache.lock.Lock()
-		var ch chan chObj
+		fmt.Println("dynamicClientCacheRefresh lock")
+		var ch chan chObj = make(chan chObj, ptr.cache.count)
 		var taskCount int
 		for k := range ptr.cache.data {
 			go ptr.fetchIDLContent(k, ch)
@@ -96,11 +98,13 @@ func (ptr *defaultKitexClientProvider) dynamicClientCacheRefresh() {
 			chObj := <-ch
 			if chObj.idlContent != "" {
 				ptr.cache.data[chObj.serviceName].provider.UpdateIDL(chObj.idlContent, map[string]string{})
+				fmt.Println("update idlContent for serviceName:", chObj.serviceName, "done")
 			} else {
 				delete(ptr.cache.data, chObj.serviceName)
 				ptr.cache.count--
 			}
 		}
+		fmt.Println("dynamicClientCacheRefresh unlock")
 		ptr.cache.lock.Unlock()
 	}
 }

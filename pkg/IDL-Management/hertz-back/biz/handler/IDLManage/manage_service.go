@@ -174,6 +174,7 @@ func DeleteByName(ctx context.Context, c *app.RequestContext) {
 // DownloadByName .
 // @router /api/download [GET]
 func DownloadByName(ctx context.Context, c *app.RequestContext) {
+	fmt.Println("download query from ", c.RemoteAddr())
 	var err error
 	var req IDLManage.NameBasedReq
 	err = c.BindAndValidate(&req)

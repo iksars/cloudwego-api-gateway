@@ -2,6 +2,7 @@ package idlprovider
 
 import (
 	"context"
+	"fmt"
 
 	idlmanage "cloudwego-api-gateway/pkg/IDL-provider/client/hertz_gen/IDLManage"
 	"cloudwego-api-gateway/pkg/IDL-provider/client/hz_client/manage_service"
@@ -26,6 +27,7 @@ func NewDefaultIdlProvider() (res *defaultIdlProvider) {
 }
 
 func (ptr *defaultIdlProvider) FindIDLByServiceName(serviceName string) (idlContent string) {
+	fmt.Println("FindIDLByServiceName called with serviceName:", serviceName)
 	req := idlmanage.NameBasedReq{Name: serviceName}
 	_, resp, _ := ptr.idlManagement.DownloadByName(context.Background(), &req)
 	if resp.StatusCode() != 200 { // 如果IDL管理服务返回状态码不是200,则返回空字符串
