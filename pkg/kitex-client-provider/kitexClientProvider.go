@@ -4,37 +4,23 @@ import (
 	idlprovider "cloudwego-api-gateway/pkg/IDL-provider"
 	"fmt"
 
+	"time"
+
 	cli "github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/genericclient"
 	"github.com/cloudwego/kitex/pkg/discovery"
 	"github.com/cloudwego/kitex/pkg/generic"
 	etcd "github.com/kitex-contrib/registry-etcd"
-
-	"sync"
-	"time"
 )
 
 type KitexClientProvider interface {
 	NewGenericClient(serviceName string) (client genericclient.Client)
 }
 
-type cache struct {
-	data     map[string]*cacheData // 缓存数据
-	count    int                   // 缓存数量
-	capacity int                   // 缓存容量
-	lock     sync.RWMutex          // 读写锁
-}
-
-type cacheData struct {
-	client   *genericclient.Client
-	provider *generic.ThriftContentProvider
-	lastUse  time.Time
-}
-
 type defaultKitexClientProvider struct {
 	register       discovery.Resolver      // 注册中心,服务发现
 	idlProvider    idlprovider.IDLProvider // idl提供者
-	cache          *cache                  // 缓存
+	cache          *LRUcache               // 缓存
 	updateInterval time.Duration           // cache更新间隔
 }
 
@@ -45,7 +31,7 @@ func NewDefaultKitexClientProvider() (res *defaultKitexClientProvider) {
 	if err != nil {
 		panic(err)
 	}
-	res.cache = &cache{data: make(map[string]*cacheData), capacity: 30}
+	res.cache = newLRUcache()
 	res.idlProvider = idlprovider.NewDefaultIdlProvider()
 	res.updateInterval = 10 * time.Second
 	// 启动一个goroutine,定时刷新client缓存
@@ -74,7 +60,7 @@ func (ptr *defaultKitexClientProvider) NewGenericClient(serviceName string) (cli
 		panic(err)
 	}
 
-	ptr.cache.set(serviceName, &cacheData{client: &client, provider: p})
+	ptr.cache.put(serviceName, &cacheData{client: &client, provider: p, serviceName: serviceName})
 	return
 }
 
@@ -88,7 +74,7 @@ func (ptr *defaultKitexClientProvider) dynamicClientCacheRefresh() {
 		time.Sleep(ptr.updateInterval)
 		ptr.cache.lock.Lock()
 		fmt.Println("dynamicClientCacheRefresh lock")
-		var ch chan chObj = make(chan chObj, ptr.cache.count)
+		var ch chan chObj = make(chan chObj, ptr.cache.ls.Len())
 		var taskCount int
 		for k := range ptr.cache.data {
 			go ptr.fetchIDLContent(k, ch)
@@ -97,11 +83,11 @@ func (ptr *defaultKitexClientProvider) dynamicClientCacheRefresh() {
 		for i := 0; i < taskCount; i++ {
 			chObj := <-ch
 			if chObj.idlContent != "" {
-				ptr.cache.data[chObj.serviceName].provider.UpdateIDL(chObj.idlContent, map[string]string{})
+				ptr.cache.data[chObj.serviceName].Value.(*cacheData).provider.UpdateIDL(chObj.idlContent, map[string]string{})
 				fmt.Println("update idlContent for serviceName:", chObj.serviceName, "done")
 			} else {
-				delete(ptr.cache.data, chObj.serviceName)
-				ptr.cache.count--
+				//idl管理平台无数据返回，说明服务已下线或出错，则删除对应缓存
+				ptr.cache.delete(chObj.serviceName)
 			}
 		}
 		fmt.Println("dynamicClientCacheRefresh unlock")
@@ -112,40 +98,4 @@ func (ptr *defaultKitexClientProvider) dynamicClientCacheRefresh() {
 func (ptr *defaultKitexClientProvider) fetchIDLContent(serviceName string, ch chan chObj) {
 	idlContent := ptr.idlProvider.FindIDLByServiceName(serviceName)
 	ch <- chObj{serviceName: serviceName, idlContent: idlContent}
-}
-
-func (d *cache) get(k string) cacheData {
-
-	d.lock.RLock()
-	defer d.lock.RUnlock()
-	if v, ok := d.data[k]; ok {
-		v.lastUse = time.Now()
-		return *v
-	}
-	return cacheData{}
-}
-
-func (d *cache) set(k string, v *cacheData) {
-	d.lock.Lock()
-	defer d.lock.Unlock()
-	if d.count > d.capacity {
-		replaceKey := findReplaceCache(d.data)
-		delete(d.data, replaceKey)
-	} else {
-		d.count++
-	}
-	v.lastUse = time.Now()
-	d.data[k] = v
-}
-
-func findReplaceCache(m map[string]*cacheData) string {
-	var minTime time.Time
-	var minKey string
-	for k, v := range m {
-		if minTime.IsZero() || v.lastUse.Before(minTime) {
-			minTime = v.lastUse
-			minKey = k
-		}
-	}
-	return minKey
 }
