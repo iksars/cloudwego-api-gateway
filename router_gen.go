@@ -3,7 +3,7 @@
 package main
 
 import (
-	router "cloudwego-api-gateway/pkg/API-Layer/biz/router"
+	router "github.com/iksars/cloudwego-api-gateway/pkg/API-Layer/biz/router"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

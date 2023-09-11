@@ -1,4 +1,4 @@
-module cloudwego-api-gateway
+module github.com/iksars/cloudwego-api-gateway
 
 go 1.20
 
@@ -6,7 +6,8 @@ replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 
 require (
 	github.com/apache/thrift v0.13.0
-	github.com/cloudwego/hertz v0.6.6
+	github.com/cloudwego/hertz v0.6.8
+	github.com/hertz-contrib/cors v0.0.0-20230423034624-2bc83a8400f0
 	gorm.io/driver/sqlite v1.5.2
 	gorm.io/gorm v1.25.2
 )
@@ -22,7 +23,6 @@ require (
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/pprof v0.0.0-20220608213341-c488b8fa1db3 // indirect
-	github.com/hertz-contrib/cors v0.0.0-20230423034624-2bc83a8400f0 // indirect
 	github.com/jhump/protoreflect v1.8.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

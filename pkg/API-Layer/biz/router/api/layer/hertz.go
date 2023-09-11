@@ -3,7 +3,7 @@
 package layer
 
 import (
-	layer "cloudwego-api-gateway/pkg/API-Layer/biz/handler/api/layer"
+	layer "github.com/iksars/cloudwego-api-gateway/pkg/API-Layer/biz/handler/api/layer"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

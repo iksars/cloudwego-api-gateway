@@ -1,7 +1,7 @@
 package routing
 
 import (
-	KClient_Provider "cloudwego-api-gateway/pkg/kitex-client-provider"
+	KClient_Provider "github.com/iksars/cloudwego-api-gateway/pkg/kitex-client-provider"
 
 	"github.com/cloudwego/kitex/client/genericclient"
 )

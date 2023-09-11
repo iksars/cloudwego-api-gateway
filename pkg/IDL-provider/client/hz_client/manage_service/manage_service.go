@@ -6,9 +6,9 @@ import (
 	"context"
 	"fmt"
 
-	IDLManage "cloudwego-api-gateway/pkg/IDL-provider/client/hertz_gen/IDLManage"
 	"github.com/cloudwego/hertz/pkg/common/config"
 	"github.com/cloudwego/hertz/pkg/protocol"
+	IDLManage "github.com/iksars/cloudwego-api-gateway/pkg/IDL-provider/client/hertz_gen/IDLManage"
 )
 
 // unused protection

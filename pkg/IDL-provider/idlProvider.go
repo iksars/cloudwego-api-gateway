@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	idlmanage "cloudwego-api-gateway/pkg/IDL-provider/client/hertz_gen/IDLManage"
-	"cloudwego-api-gateway/pkg/IDL-provider/client/hz_client/manage_service"
+	"github.com/iksars/cloudwego-api-gateway/pkg/IDL-provider/client/hz_client/manage_service"
+
+	idlmanage "github.com/iksars/cloudwego-api-gateway/pkg/IDL-provider/client/hertz_gen/IDLManage"
 )
 
 type IDLProvider interface {

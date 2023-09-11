@@ -1,8 +1,9 @@
 package kitexclientprovider
 
 import (
-	idlprovider "cloudwego-api-gateway/pkg/IDL-provider"
 	"fmt"
+
+	idlprovider "github.com/iksars/cloudwego-api-gateway/pkg/IDL-provider"
 
 	"time"
 

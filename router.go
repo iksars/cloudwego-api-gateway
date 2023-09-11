@@ -3,8 +3,8 @@
 package main
 
 import (
-	handler "cloudwego-api-gateway/pkg/API-Layer/biz/handler"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	handler "github.com/iksars/cloudwego-api-gateway/pkg/API-Layer/biz/handler"
 )
 
 // customizeRegister registers customize routers.

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-frontEndPath=/home/iksar/goproject/src/cloudwego-api-gateway/pkg/IDL-Management/vue-front
-backEndPath=/home/iksar/goproject/src/cloudwego-api-gateway/pkg/IDL-Management/hertz-back
-originPath=/home/iksar/goproject/src/cloudwego-api-gateway
+frontEndPath=/home/iksar/goproject/src/github.com/iksars/cloudwego-api-gateway/pkg/IDL-Management/vue-front
+backEndPath=/home/iksar/goproject/src/github.com/iksars/cloudwego-api-gateway/pkg/IDL-Management/hertz-back
+originPath=/home/iksar/goproject/src/github.com/iksars/cloudwego-api-gateway
 
 gnome-terminal -t "backend" -- bash -c "cd ${backEndPath}; go build -o hertz-back; ./hertz-back; exec bash"
 sleep 1
