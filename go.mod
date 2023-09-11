@@ -6,7 +6,11 @@ replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 
 require (
 	github.com/apache/thrift v0.13.0
+<<<<<<< HEAD
 	github.com/cloudwego/hertz v0.6.8
+=======
+	github.com/cloudwego/hertz v0.6.6
+>>>>>>> 9df29cc20734f32bdf3b82b6a0a0428b23ae805d
 	github.com/hertz-contrib/cors v0.0.0-20230423034624-2bc83a8400f0
 	gorm.io/driver/sqlite v1.5.2
 	gorm.io/gorm v1.25.2

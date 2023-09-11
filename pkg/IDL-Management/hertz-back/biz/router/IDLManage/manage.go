@@ -3,7 +3,7 @@
 package IDLManage
 
 import (
-	IDLManage "cloudwego-api-gateway/pkg/IDL-Management/hertz-back/biz/handler/IDLManage"
+	IDLManage "github.com/iksars/cloudwego-api-gateway/pkg/IDL-Management/hertz-back/biz/handler/IDLManage"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

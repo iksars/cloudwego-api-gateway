@@ -3,11 +3,12 @@
 package IDLManageService
 
 import (
-	IDLManage "cloudwego-api-gateway/pkg/IDL-Management/hertz-back/biz/model/IDLManage"
 	"context"
 	"fmt"
 	"io"
 	"strings"
+
+	IDLManage "github.com/iksars/cloudwego-api-gateway/pkg/IDL-Management/hertz-back/biz/model/IDLManage"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"

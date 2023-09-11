@@ -1,8 +1,9 @@
 package IDLManageService
 
 import (
-	IDLManage "cloudwego-api-gateway/pkg/IDL-Management/hertz-back/biz/model/IDLManage"
 	"time"
+
+	IDLManage "github.com/iksars/cloudwego-api-gateway/pkg/IDL-Management/hertz-back/biz/model/IDLManage"
 )
 
 func RecorderToEntity(r *IDLRecorder) *IDLManage.IDLEntity {
